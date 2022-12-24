@@ -113,7 +113,7 @@ def community_louvain(W, gamma=1, ci=None, B='modularity', seed=None):
     n = len(W)
     s = np.sum(W)
 
-    #if np.min(W) < -1e-10:
+    # if np.min(W) < -1e-10:
     #    raise BCTParamError('adjmat must not contain negative weights')
 
     if ci is None:
@@ -134,14 +134,15 @@ def community_louvain(W, gamma=1, ci=None, B='modularity', seed=None):
         W1 = -W * (W < 0)
         s1 = np.sum(W1)
         if s1:
-            B1 = W1 - gamma * np.outer(np.sum(W1, axis=1), np.sum(W1, axis=0)) / s1
+            B1 = W1 - gamma * \
+                np.outer(np.sum(W1, axis=1), np.sum(W1, axis=0)) / s1
         else:
             B1 = 0
 
     elif np.min(W) < -1e-10:
         raise BCTParamError("Input connection matrix contains negative "
-            'weights but objective function dealing with negative weights '
-            'was not selected')
+                            'weights but objective function dealing with negative weights '
+                            'was not selected')
 
     if B == 'potts' and np.any(np.logical_not(np.logical_or(W == 0, W == 1))):
         raise BCTParamError('Potts hamiltonian requires binary input matrix')
@@ -164,10 +165,10 @@ def community_louvain(W, gamma=1, ci=None, B='modularity', seed=None):
             raise BCTParamError('objective function matrix does not match '
                                 'size of adjacency matrix')
         if not np.allclose(B, B.T):
-            print ('Warning: objective function matrix not symmetric, '
-                   'symmetrizing')
+            print('Warning: objective function matrix not symmetric, '
+                  'symmetrizing')
             B = (B + B.T) / 2
-    
+
     Hnm = np.zeros((n, n))
     for m in range(1, n + 1):
         Hnm[:, m - 1] = np.sum(B[:, ci == m], axis=1)  # node to module degree
@@ -236,7 +237,7 @@ def community_louvain(W, gamma=1, ci=None, B='modularity', seed=None):
         q0 = q
 
         q = np.trace(B)  # compute modularity
-    
+
     # Workaround to normalize
     if not renormalize:
         return ci, q/s
@@ -384,7 +385,7 @@ def link_communities(W, type_clustering='single'):
 
         C[i + 1, :] = C[i, :]  # copy current partition
 
-        #if i in (2693,):
+        # if i in (2693,):
         #    import pdb
         #    pdb.set_trace()
 
@@ -448,11 +449,11 @@ def link_communities(W, type_clustering='single'):
         #time5 = time.time()
         #print('get unique communities time', time5-time4)
 
-    #ENDT HAIERARKIKL CLUSTRRINNG
-    #ENDT HAIERARKIKL CLUSTRRINNG
-    #ENDT HAIERARKIKL CLUSTRRINNG
-    #ENDT HAIERARKIKL CLUSTRRINNG
-    #ENDT HAIERARKIKL CLUSTRRINNG
+    # ENDT HAIERARKIKL CLUSTRRINNG
+    # ENDT HAIERARKIKL CLUSTRRINNG
+    # ENDT HAIERARKIKL CLUSTRRINNG
+    # ENDT HAIERARKIKL CLUSTRRINNG
+    # ENDT HAIERARKIKL CLUSTRRINNG
 
     #Dc[ np.where(np.isnan(Dc)) ]=0
     i = np.argmax(np.sum(Dc * Mc, axis=1))
@@ -554,7 +555,7 @@ def modularity_dir(A, gamma=1, kci=None):
                 qmax = np.max(q_iter * it)
                 imax = np.argmax(q_iter * it)
                 #imax, = np.where(q_iter == qmax)
-                #if len(imax) > 0:
+                # if len(imax) > 0:
                 #    imax = imax[0]
                 #    print(imax)
                 # does switching increase modularity?
@@ -1570,7 +1571,7 @@ def modularity_und(A, gamma=1, kci=None):
                 qmax = np.max(q_iter * it)
                 imax = np.argmax(q_iter * it)
                 #imax, = np.where(q_iter == qmax)
-                #if len(imax) > 1:
+                # if len(imax) > 1:
                 #    imax = imax[0]
                 # does switching increase modularity?
                 mod_asgn_iter[imax] *= -1

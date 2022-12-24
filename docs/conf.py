@@ -12,6 +12,7 @@
 # All configuration values have a default; values that are commented out
 # serve to show the default.
 
+import numpy_ext.numpydoc
 import sys
 import os
 
@@ -21,7 +22,7 @@ import os
 #sys.path.insert(0, os.path.abspath('.'))
 
 curdir = os.path.dirname(__file__)
-sys.path.append(os.path.abspath(os.path.join( curdir, 'sphinxext' )))
+sys.path.append(os.path.abspath(os.path.join(curdir, 'sphinxext')))
 
 # -- General configuration ------------------------------------------------
 
@@ -32,7 +33,6 @@ sys.path.append(os.path.abspath(os.path.join( curdir, 'sphinxext' )))
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
 
-import numpy_ext.numpydoc
 extensions = [
     'sphinx.ext.autodoc', 'sphinx.ext.autosummary', 'numpy_ext.numpydoc'
 ]
@@ -189,22 +189,22 @@ htmlhelp_basename = 'bctdoc'
 # -- Options for LaTeX output ---------------------------------------------
 
 latex_elements = {
-# The paper size ('letterpaper' or 'a4paper').
-#'papersize': 'letterpaper',
+    # The paper size ('letterpaper' or 'a4paper').
+    # 'papersize': 'letterpaper',
 
-# The font size ('10pt', '11pt' or '12pt').
-#'pointsize': '10pt',
+    # The font size ('10pt', '11pt' or '12pt').
+    # 'pointsize': '10pt',
 
-# Additional stuff for the LaTeX preamble.
-#'preamble': '',
+    # Additional stuff for the LaTeX preamble.
+    # 'preamble': '',
 }
 
 # Grouping the document tree into LaTeX files. List of tuples
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-  ('index', 'bct.tex', u'bct Documentation',
-   u'rlaplant', 'manual'),
+    ('index', 'bct.tex', u'bct Documentation',
+     u'rlaplant', 'manual'),
 ]
 
 # The name of an image file (relative to this directory) to place at the top of
@@ -247,9 +247,9 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-  ('index', 'bct', u'bct Documentation',
-   u'rlaplant', 'bct', 'One line description of project.',
-   'Miscellaneous'),
+    ('index', 'bct', u'bct Documentation',
+     u'rlaplant', 'bct', 'One line description of project.',
+     'Miscellaneous'),
 ]
 
 # Documents to append as an appendix to all manuals.

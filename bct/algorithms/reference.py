@@ -945,7 +945,8 @@ def null_model_dir_sign(W, bin_swaps=5, wei_freq=.1, seed=None):
             W0.flat[Lij[Oind]] = s * Wv  # weight at this index
         else:
             wsize = np.size(Wv)
-            wei_period = np.round(1 / wei_freq).astype(int)  # convert frequency to period
+            # convert frequency to period
+            wei_period = np.round(1 / wei_freq).astype(int)
             lq = np.arange(wsize, 0, -wei_period, dtype=int)
             for m in lq:  # iteratively explore at this period
                 # get indices of Lij that sort P
@@ -1071,7 +1072,8 @@ def null_model_und_sign(W, bin_swaps=5, wei_freq=.1, seed=None):
             W0.flat[Lij[Oind]] = s * Wv  # weight at this index
         else:
             wsize = np.size(Wv)
-            wei_period = np.round(1 / wei_freq).astype(int)  # convert frequency to period
+            # convert frequency to period
+            wei_period = np.round(1 / wei_freq).astype(int)
             lq = np.arange(wsize, 0, -wei_period, dtype=int)
             for m in lq:  # iteratively explore at this period
                 # get indices of Lij that sort P
@@ -1429,18 +1431,18 @@ def randmio_dir_signed(R, itr, seed=None):
 
     itr *= n * (n - 1)
 
-    #maximal number of rewiring attempts per iter
+    # maximal number of rewiring attempts per iter
     max_attempts = n
-    #actual number of successful rewirings
+    # actual number of successful rewirings
     eff = 0
 
-    #print(itr)
+    # print(itr)
 
     for it in range(int(itr)):
-        #print(it)
+        # print(it)
         att = 0
         while att <= max_attempts:
-            #select four distinct vertices
+            # select four distinct vertices
 
             a, b, c, d = pick_four_unique_nodes_quickly(n, rng)
 
@@ -1454,11 +1456,10 @@ def randmio_dir_signed(R, itr, seed=None):
 
             #print(np.sign(r0_ab), np.sign(r0_ad))
 
-            #rewiring condition
-            if (    np.sign(r0_ab) == np.sign(r0_cd) and
+            # rewiring condition
+            if (np.sign(r0_ab) == np.sign(r0_cd) and
                     np.sign(r0_ad) == np.sign(r0_cb) and
                     np.sign(r0_ab) != np.sign(r0_ad)):
-
 
                 R[a, d] = r0_ab
                 R[a, b] = r0_ad
@@ -1470,7 +1471,7 @@ def randmio_dir_signed(R, itr, seed=None):
 
             att += 1
 
-    #print(eff)
+    # print(eff)
 
     return R, eff
 
@@ -1586,7 +1587,7 @@ def randmio_und_signed(R, itr, seed=None):
     R = R.copy()
     n = len(R)
 
-    itr *= int(n * (n -1) / 2)
+    itr *= int(n * (n - 1) / 2)
 
     max_attempts = int(np.round(n / 2))
     eff = 0
@@ -1602,8 +1603,8 @@ def randmio_und_signed(R, itr, seed=None):
             r0_ad = R[a, d]
             r0_cb = R[c, b]
 
-            #rewiring condition
-            if (    np.sign(r0_ab) == np.sign(r0_cd) and
+            # rewiring condition
+            if (np.sign(r0_ab) == np.sign(r0_cd) and
                     np.sign(r0_ad) == np.sign(r0_cb) and
                     np.sign(r0_ab) != np.sign(r0_ad)):
 

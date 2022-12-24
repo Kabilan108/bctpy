@@ -39,7 +39,8 @@ def test_duecredit(script_path, dc_context):
     result.wait()
     assert result.returncode == 0
 
-    result2 = sp.Popen(["duecredit", "summary", "--format", "bibtex"], stdout=sp.PIPE)
+    result2 = sp.Popen(
+        ["duecredit", "summary", "--format", "bibtex"], stdout=sp.PIPE)
     result2.wait()
     assert result2.returncode == 0
 

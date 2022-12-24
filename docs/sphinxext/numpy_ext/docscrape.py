@@ -18,6 +18,7 @@ class Reader(object):
     """A line-based string reader.
 
     """
+
     def __init__(self, data):
         """
         Parameters
@@ -111,7 +112,7 @@ class NumpyDocString(object):
             'References': '',
             'Examples': '',
             'index': {}
-            }
+        }
 
         self._parse()
 
