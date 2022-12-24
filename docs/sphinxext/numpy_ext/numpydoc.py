@@ -19,7 +19,7 @@ It will:
 
 from __future__ import unicode_literals
 
-import sys # Only needed to check Python version
+import sys  # Only needed to check Python version
 import os
 import re
 import pydoc
@@ -47,7 +47,7 @@ def mangle_docstrings(app, what, name, obj, options, lines,
             lines[:] = str(doc).splitlines()
 
     if app.config.numpydoc_edit_link and hasattr(obj, '__name__') and \
-           obj.__name__:
+            obj.__name__:
         if hasattr(obj, '__module__'):
             v = dict(full_name="%s.%s" % (obj.__module__, obj.__name__))
         else:
@@ -86,7 +86,7 @@ def mangle_signature(app, what, name, obj,
     # Do not try to inspect classes that don't define `__init__`
     if (inspect.isclass(obj) and
         (not hasattr(obj, '__init__') or
-        'initializes x; see ' in pydoc.getdoc(obj.__init__))):
+            'initializes x; see ' in pydoc.getdoc(obj.__init__))):
         return '', ''
 
     if not (callable(obj) or hasattr(obj, '__argspec_is_invalid_')):
@@ -118,9 +118,10 @@ def setup(app, get_doc_object_=get_doc_object):
     app.add_domain(NumpyPythonDomain)
     app.add_domain(NumpyCDomain)
 
-#-----------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 # Docstring-mangling domains
-#-----------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
+
 
 try:
     import sphinx  # lazy to avoid test dependency

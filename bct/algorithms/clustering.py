@@ -40,10 +40,10 @@ def agreement(ci, buffsz=1000):
     ci = np.array(ci)
     n_nodes, n_partitions = ci.shape
 
-    if n_partitions <= buffsz: # Case 1: Use all partitions at once
+    if n_partitions <= buffsz:  # Case 1: Use all partitions at once
         ind = dummyvar(ci)
         D = np.dot(ind, ind.T)
-    else: # Case 2: Add together results from subsets of partitions
+    else:  # Case 2: Add together results from subsets of partitions
         a = np.arange(0, n_partitions, buffsz)
         b = np.arange(buffsz, n_partitions, buffsz)
         if len(a) != len(b):
@@ -250,7 +250,7 @@ def clustering_coef_wu_sign(W, coef_type='default'):
     '''
     Returns the weighted clustering coefficient generalized or separated
     for positive and negative weights.
-  
+
     Three Algorithms are supported; herefore referred to as default, zhang,
     and costantini.
 
@@ -394,6 +394,7 @@ def consensus_und(D, tau, reps=1000, seed=None):
         consensus partition
     '''
     rng = get_rng(seed)
+
     def unique_partitions(cis):
         # relabels the partitions to recognize different numbers on same
         # topology
@@ -485,12 +486,12 @@ def get_components(A, no_depend=False):
     if not np.all(A == A.T):  # ensure matrix is undirected
         raise BCTParamError('get_components can only be computed for undirected'
                             ' matrices.  If your matrix is noisy, correct it with np.around')
-    
+
     A = binarize(A, copy=True)
     n = len(A)
     np.fill_diagonal(A, 1)
 
-    edge_map = [{u,v} for u in range(n) for v in range(n) if A[u,v] == 1]
+    edge_map = [{u, v} for u in range(n) for v in range(n) if A[u, v] == 1]
     union_sets = []
     for item in edge_map:
         temp = []
@@ -503,8 +504,8 @@ def get_components(A, no_depend=False):
         temp.append(item)
         union_sets = temp
 
-    comps = np.array([i+1 for v in range(n) for i in 
-        range(len(union_sets)) if v in union_sets[i]])
+    comps = np.array([i+1 for v in range(n) for i in
+                      range(len(union_sets)) if v in union_sets[i]])
     comp_sizes = np.array([len(s) for s in union_sets])
 
     return comps, comp_sizes
@@ -631,7 +632,8 @@ def transitivity_bd(A):
     S = A + A.T  # symmetrized input graph
     K = np.sum(S, axis=1)  # total degree (in+out)
     cyc3 = np.diag(np.dot(S, np.dot(S, S))) / 2  # number of 3-cycles
-    CYC3 = K * (K - 1) - 2 * np.diag(np.dot(A, A))  # number of all possible 3-cycles
+    # number of all possible 3-cycles
+    CYC3 = K * (K - 1) - 2 * np.diag(np.dot(A, A))
     return np.sum(cyc3) / np.sum(CYC3)
 
 

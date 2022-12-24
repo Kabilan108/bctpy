@@ -83,7 +83,7 @@ def test_modularity_finetune_und():
 
     # also the matlab and python versions of modularity_und return slightly
     # different modular structure, but the instability is present despite this
-    #(i.e. it is unstable both when the modular structure is identical and not)
+    # (i.e. it is unstable both when the modular structure is identical and not)
 
 
 def test_modularity_louvain_und_sign_seed():
@@ -159,7 +159,7 @@ def test_modularity_louvain_dir_low_modularity():
 #	seed = 39602351
 #	ci,oq = bct.modularity_louvain_dir(x, seed=seed)
 #	_,q = bct.modularity_finetune_dir(x, ci=ci, seed=seed)
-#	print q,oq
+# print q,oq
 #	assert q >= oq
     # this does not pass. the matlab code appears to have no idea what to do
     # with
@@ -183,9 +183,9 @@ def test_modularity_louvain_dir():
 #	x = load_directed_sample()
 #	seed = 26080
 #	ci,oq = bct.modularity_louvain_dir(x, seed=seed)
-#	for i in xrange(100):
+# for i in xrange(100):
 #		_,q = bct.modularity_finetune_dir(x, ci=ci)
-#		print q,oq
+# print q,oq
 #		assert q >= oq
     # this does not pass with similar behavior to low modularity.
     # the code occasionally returns lower modularity (but very very similar,
@@ -204,7 +204,8 @@ def test_community_louvain():
 
 def test_modularity_dir_bug71():
     """Regression test for bug described in issue #71"""
-    fpath = os.path.join(TEST_DIR, "failing_cases", "modularity_dir_example.csv")
+    fpath = os.path.join(TEST_DIR, "failing_cases",
+                         "modularity_dir_example.csv")
     x = np.loadtxt(fpath, int, delimiter=',')
 
     bct.modularity_dir(x)

@@ -520,8 +520,8 @@ def efficiency_bin(G, local=False):
             # V,=np.where(G[u,:])			#neighbors
             # k=len(V)					#degree
             # if k>=2:					#degree must be at least 2
-            #	e=distance_inv(G[V].T[V])
-            #	E[u]=np.sum(e)/(k*k-k)	#local efficiency computation
+            # e=distance_inv(G[V].T[V])
+            # E[u]=np.sum(e)/(k*k-k)	#local efficiency computation
 
             # find pairs of neighbors
             V, = np.where(np.logical_or(G[u, :], G[u, :].T))
@@ -567,7 +567,7 @@ def efficiency_wei(Gw, local=False):
         & Sporns 2010). This version is not recommended. The local efficiency
         calculation was improved in (Wang et al. 2016) as a true generalization
         of the binary variant.
-        
+
     Returns
     -------
     Eglob : float
@@ -594,7 +594,7 @@ def efficiency_wei(Gw, local=False):
     '''
     if local not in (True, False, 'local', 'global', 'original'):
         raise BCTParamError("local param must be any of True, False, "
-            "'local', 'global', or 'original'")
+                            "'local', 'global', or 'original'")
 
     def distance_inv_wei(G):
         n = len(G)
@@ -630,15 +630,15 @@ def efficiency_wei(Gw, local=False):
     n = len(Gw)
     Gl = invert(Gw, copy=True)  # connection length matrix
     A = np.array((Gw != 0), dtype=int)
-    #local efficiency algorithm described by Rubinov and Sporns 2010, not recommended
+    # local efficiency algorithm described by Rubinov and Sporns 2010, not recommended
     if local == 'original':
         E = np.zeros((n,))
         for u in range(n):
             # V,=np.where(Gw[u,:])		#neighbors
             # k=len(V)					#degree
             # if k>=2:					#degree must be at least 2
-            #	e=(distance_inv_wei(Gl[V].T[V])*np.outer(Gw[V,u],Gw[u,V]))**1/3
-            #	E[u]=np.sum(e)/(k*k-k)
+            # e=(distance_inv_wei(Gl[V].T[V])*np.outer(Gw[V,u],Gw[u,V]))**1/3
+            # E[u]=np.sum(e)/(k*k-k)
 
             # find pairs of neighbors
             V, = np.where(np.logical_or(Gw[u, :], Gw[:, u].T))
@@ -657,7 +657,7 @@ def efficiency_wei(Gw, local=False):
                 # print numer,denom
                 E[u] = numer / denom  # local efficiency
 
-    #local efficiency algorithm described by Wang et al 2016, recommended
+    # local efficiency algorithm described by Wang et al 2016, recommended
     elif local in (True, 'local'):
         E = np.zeros((n,))
         for u in range(n):
@@ -665,7 +665,7 @@ def efficiency_wei(Gw, local=False):
             sw = cuberoot(Gw[u, V]) + cuberoot(Gw[V, u].T)
             e = distance_inv_wei(cuberoot(Gl)[np.ix_(V, V)])
             se = e+e.T
-         
+
             numer = np.sum(np.outer(sw.T, sw) * se) / 2
             if numer != 0:
                 # symmetrized adjacency vector
@@ -932,7 +932,7 @@ def reachdist(CIJ, ensure_binary=True):
 
     R, D, powr = reachdist2(CIJ, CIJpwr, R, D, n, powr, col, row)
 
-    #'invert' CIJdist to get distances
+    # 'invert' CIJdist to get distances
     D = powr - D + 1
 
     # put inf if no path found
@@ -1010,8 +1010,10 @@ def search_information(adjacency, transform=None, has_memory=False):
                             pr_step_ff[0] = T[path[0], path[1]]
                             pr_step_bk[lp-1] = T[path[lp], path[lp-1]]
                             for z in range(1, lp):
-                                pr_step_ff[z] = T[path[z], path[z+1]] / (1 - T[path[z-1], path[z]])
-                                pr_step_bk[lp-z-1] = T[path[lp-z], path[lp-z-1]] / (1 - T[path[lp-z+1], path[lp-z]])
+                                pr_step_ff[z] = T[path[z], path[z+1]
+                                                  ] / (1 - T[path[z-1], path[z]])
+                                pr_step_bk[lp-z-1] = T[path[lp-z], path[lp-z-1]
+                                                       ] / (1 - T[path[lp-z+1], path[lp-z]])
                         else:
                             for z in range(lp):
                                 pr_step_ff[z] = T[path[z], path[z+1]]
@@ -1027,7 +1029,8 @@ def search_information(adjacency, transform=None, has_memory=False):
                         if has_memory:
                             pr_step_ff[0] = T[path[0], path[1]]
                             for z in range(1, lp):
-                                pr_step_ff[z] = T[path[z], path[z+1]] / (1 - T[path[z-1], path[z]])
+                                pr_step_ff[z] = T[path[z], path[z+1]
+                                                  ] / (1 - T[path[z-1], path[z]])
                         else:
                             for z in range(lp):
                                 pr_step_ff[z] = T[path[z], path[z+1]]

@@ -69,11 +69,11 @@ def adjacency_plot_und(A, coor, tube=False):
 
     # i=0
     # for r2 in xrange(n):
-    #	for r1 in xrange(r2):
+    # for r1 in xrange(r2):
     #		starts[i,:] = coor[r1,:]
     #		vecs[i,:] = coor[r2,:] - coor[r1,:]
-    #		adjdat[i,:]
-    #		i+=1
+    # adjdat[i,:]
+    # i+=1
 
     adjdat = A.flat[ixes]
 
@@ -253,7 +253,8 @@ def align_matrices(m1, m2, dfun='sqrdiff', verbose=False, H=1e6, Texp=1,
                 amin = anew
                 mincost = lowcost
                 if verbose:
-                    print('step %i ... current lowest cost = %f' % (h, mincost))
+                    print('step %i ... current lowest cost = %f' %
+                          (h, mincost))
                 hcnt = 0
             # if the cost is 0 we're done
             if mincost == 0:
@@ -599,7 +600,8 @@ def reorder_matrix(m1, cost='line', verbose=False, H=1e4, Texp=10, T0=1e-3, Hbrk
                 amin = anew
                 mincost = lowcost
                 if verbose:
-                    print('step %i ... current lowest cost = %f' % (h, mincost))
+                    print('step %i ... current lowest cost = %f' %
+                          (h, mincost))
                 hcnt = 0
 
     if verbose:
@@ -728,8 +730,8 @@ def reorder_mod(A, ci):
         # reverse mod_imp to sort by the first column first and so on
         # print ksmi
         # for i,sin in enumerate(signs):
-        #	if sin==-1:
-        #		ksmi[i,:]=ksmi[i,:][::-1]
+        # if sin==-1:
+        # ksmi[i,:]=ksmi[i,:][::-1]
         # print ksmi
         # print np.shape(ksmi)
 

@@ -107,8 +107,7 @@ def get_rng(seed=None):
     elif isinstance(seed, np.random.RandomState):
         return seed
     try:
-        rstate =  np.random.RandomState(seed)
+        rstate = np.random.RandomState(seed)
     except ValueError:
         rstate = np.random.RandomState(random.Random(seed).randint(0, 2**32-1))
     return rstate
-

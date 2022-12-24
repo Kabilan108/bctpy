@@ -540,4 +540,3 @@ BETZEL2016 = """
   publisher={Elsevier}
 }
 """.strip()
-

@@ -184,7 +184,7 @@ def diversity_coef_sign(W, ci):
         pnm[np.logical_not(pnm)] = 1
         return -np.sum(pnm * np.log(pnm), axis=1) / np.log(m)
 
-    #explicitly ignore compiler warning for division by zero
+    # explicitly ignore compiler warning for division by zero
     with np.errstate(invalid='ignore'):
         Hpos = entropy(W * (W > 0))
         Hneg = entropy(-W * (W < 0))
@@ -327,7 +327,7 @@ def edge_betweenness_wei(G):
             if D[S].size == 0:
                 break  # all nodes reached, or
             if np.isinf(np.min(D[S])):  # some cannot be reached
-                Q[:q + 1], = np.where(np.isinf(D)) # these are first in line.
+                Q[:q + 1], = np.where(np.isinf(D))  # these are first in line.
                 break
             V, = np.where(D == np.min(D[S]))
 
@@ -498,8 +498,8 @@ def gateway_coef_sign(W, ci, centrality_type='degree'):
     '''
     if centrality_type not in ('degree', 'betweenness'):
         raise BCTParamError("centrality_type must be either 'degree' "
-            "or 'betweenness' ")
-    
+                            "or 'betweenness' ")
+
     _, ci = np.unique(ci, return_inverse=True)
     ci += 1
     n = len(W)
@@ -508,15 +508,15 @@ def gateway_coef_sign(W, ci, centrality_type='degree'):
     def gcoef(W):
         nr_modules = int(np.max(ci))
 
-        #strength
+        # strength
         s = np.sum(W, axis=1)
-        #neighbor community affiliation
+        # neighbor community affiliation
         Gc = np.inner((W != 0), np.diag(ci))
-        #weighting of connections of node to each module
+        # weighting of connections of node to each module
         ks = np.zeros((n, nr_modules))
-        #module to module connectivities
+        # module to module connectivities
         kjs = np.zeros((n, nr_modules))
-        #sum of centralities of neighbors within a module
+        # sum of centralities of neighbors within a module
         cs = np.zeros((n, nr_modules))
 
         if centrality_type == 'degree':
@@ -524,48 +524,47 @@ def gateway_coef_sign(W, ci, centrality_type='degree'):
         elif centrality_type == 'betweenness':
             cent = betweenness_wei(invert(W))
 
-
         max_centrality = 0
         for i in range(nr_modules):
-            #compute total weight of connections from each node to module
-            ks[:,i] = np.sum(W * (Gc == i+1), axis=1)
+            # compute total weight of connections from each node to module
+            ks[:, i] = np.sum(W * (Gc == i+1), axis=1)
 
-            #find module with max centrality value
+            # find module with max centrality value
             centrality = np.sum(cent[ci == i+1])
             if centrality > max_centrality:
                 max_centrality = centrality
 
         for i in range(nr_modules):
-            #if more than 1 node in the module
-            if np.sum(ci == i+1) > 1:         
+            # if more than 1 node in the module
+            if np.sum(ci == i+1) > 1:
                 kj = np.ones((np.sum(ci == i+1), 1)) * np.sum(ks[ci == i+1, :])
                 kj[i] /= 2
-                
+
                 kjs[ci == i+1, :] = kj
-                        
+
         for i in range(n):
-            #if node is connected
+            # if node is connected
             if s[i] > 0:
                 for j in range(nr_modules):
-                    #sum of centralities of neighbors of node within a module
+                    # sum of centralities of neighbors of node within a module
                     in_mod_nodes, = np.where(ci == j+1)
                     neighbs, = np.where(W[in_mod_nodes, i] > 0)
                     cs[i, j] = np.sum(cent[neighbs])
 
-        #normalize by total connections
+        # normalize by total connections
         ksm = ks / kjs
 
-        #account for division by 0
+        # account for division by 0
         ksm[np.where(kjs == 0)] = 0
 
-        #normalize by max centrality
+        # normalize by max centrality
         centm = cs / max_centrality
-    
+
         gs = (1 - ksm * centm) ** 2
         sm = np.transpose(np.tile(s, (nr_modules, 1)))
         Gw = 1 - np.sum((ks ** 2) / (sm ** 2) * gs, axis=1)
 
-        #account for divison by 0 and set nodes with no neighbors to 0
+        # account for divison by 0 and set nodes with no neighbors to 0
         Gw[np.where(np.isnan(Gw))] = 0
         Gw[np.where(np.logical_not(Gw))] = 0
 
@@ -789,6 +788,7 @@ def participation_coef(W, ci, degree='undirected'):
 
     return P
 
+
 def participation_coef_sparse(W, ci, degree='undirected'):
     '''
     Participation coefficient is a measure of diversity of intermodular
@@ -818,17 +818,19 @@ def participation_coef_sparse(W, ci, degree='undirected'):
     n = W.shape[0]  # number of vertices
     Ko = np.array(W.sum(axis=1)).flatten().astype(float)  # (out) degree
     Gc = W.copy().astype('int16')
-    Gc[Gc!=0] = 1 
-    Gc = Gc * np.diag(ci)# neighbor community affiliation
-    
+    Gc[Gc != 0] = 1
+    Gc = Gc * np.diag(ci)  # neighbor community affiliation
+
     P = np.zeros((n))
     for i in range(1, int(np.max(ci)) + 1):
-        P = P + (np.array((W.multiply(Gc == i).astype(int)).sum(axis=1)).flatten() / Ko)**2
+        P = P + (np.array((W.multiply(Gc == i).astype(int)
+                           ).sum(axis=1)).flatten() / Ko)**2
     P = 1 - P
     # P=0 if for nodes with no (out) neighbors
     P[np.where(np.logical_not(Ko))] = 0
 
     return P
+
 
 def participation_coef_sign(W, ci):
     '''
@@ -868,7 +870,7 @@ def participation_coef_sign(W, ci):
         P[np.where(np.logical_not(P))] = 0  # p_ind=0 if no (out)neighbors
         return P
 
-    #explicitly ignore compiler warning for division by zero
+    # explicitly ignore compiler warning for division by zero
     with np.errstate(invalid='ignore'):
         Ppos = pcoef(W * (W > 0))
         Pneg = pcoef(-W * (W < 0))
